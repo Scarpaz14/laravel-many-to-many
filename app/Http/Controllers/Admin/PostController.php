@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -31,7 +32,8 @@ class PostController extends Controller
     public function create()
     {
         $categories= Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags= Tag::all();
+        return view('admin.posts.create', compact('categories','tags'));
     }
 
     /**
