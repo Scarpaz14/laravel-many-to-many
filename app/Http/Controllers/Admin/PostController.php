@@ -91,7 +91,13 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories= Category::all();
-        return view('admin.posts.edit', compact('post','categories'));
+        $tags = Tag::all();
+        
+        // andiamo a fare un controllo su quale tags era stato precedente chekkato passando i tag asscoiati, e il loro id, infine gli mettiamo in un array(toArray)
+        $postTags = $post->tags->map(function ($item){
+            return $item->id;
+        })->toArray();
+        return view('admin.posts.edit', compact('post','categories','tags', 'postTags'));
     }
 
     /**
