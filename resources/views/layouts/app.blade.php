@@ -35,6 +35,7 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="{{route('admin.posts.index')}}">Posts</li>
                         <li class="nav-item"><a class="nav-link" href="{{route('admin.categories.index')}}">Categories</li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('admin.tags.index')}}">Tags</li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
