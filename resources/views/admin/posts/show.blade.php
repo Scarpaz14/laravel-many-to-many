@@ -16,6 +16,18 @@
             <div>
                 {{$post->content}}
             </div>
+
+            {{-- //accediamo ai tags associati al post, usiamo come metodo della nostra relazione sottoforma di proprieta' --}}
+            @if (count($post->tags) > 0)
+            <div class="mt-2">
+                <h3>Tags</h3>
+                <ul>
+                    @foreach ($post->tags as $tag)
+                    <li>{{$tag->name}}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
         </div>
     </div>
 </div>
