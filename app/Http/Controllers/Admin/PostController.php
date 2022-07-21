@@ -49,7 +49,8 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string|max:65535',
             'published' => 'sometimes|accepted',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
         ]);
         // prendo i dati dalla request e creo il post
         $data = $request->all();
@@ -60,6 +61,12 @@ class PostController extends Controller
 
         $newPost->published = isset($data['published']); // true o false
         $newPost->save();
+
+        // se sono presenti dei tag inerenti, li assiciamo al post appena creato;
+        // con questo metodo andiamo a popolare la tabella pivot con i tag associat ad un determinato post
+        if (isset($data['tags'])){
+            $newPost->tags()->sync($data['tags']);
+        }
         // redirect alla pagina del post appena creato
         return redirect()->route('admin.posts.show', $newPost->id);
     }
@@ -101,7 +108,8 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string|max:65535',
             'published' => 'sometimes|accepted',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
         ]);
         // aggiornamento
         $data = $request->all();
