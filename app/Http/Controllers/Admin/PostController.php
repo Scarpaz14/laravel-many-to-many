@@ -92,7 +92,7 @@ class PostController extends Controller
     {
         $categories= Category::all();
         $tags = Tag::all();
-        
+
         // andiamo a fare un controllo su quale tags era stato precedente chekkato passando i tag asscoiati, e il loro id, infine gli mettiamo in un array(toArray)
         $postTags = $post->tags->map(function ($item){
             return $item->id;
@@ -128,6 +128,11 @@ class PostController extends Controller
         $post->published = isset($data['published']); // true o false
 
         $post->save();
+
+        $tags =isset($data['tags']) ? $data['tags'] : [];
+        
+        //andiamo a togliere i tags associati dalla tabella pivot in caso di check vuota
+        $post->tags()->sync($tags);
         // redirect
         return redirect()->route('admin.posts.show', $post->id);
     }
